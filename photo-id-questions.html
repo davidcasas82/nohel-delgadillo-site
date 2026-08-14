@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Preguntas de identificación — Abuelito y Abuelita</title>
+  <style>
+    :root {
+      --bg: #f6f3ee;
+      --card: #fff;
+      --ink: #1a1a1a;
+      --muted: #5c5c5c;
+      --line: #e0d8cc;
+      --accent: #2c4a6e;
+      --ok: #1f6b3a;
+      --ok-bg: #e8f5ec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.45;
+    }
+    header {
+      background: var(--accent);
+      color: #fff;
+      padding: 1rem 1.25rem 1.1rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    }
+    header h1 {
+      margin: 0 0 .25rem;
+      font-size: 1.15rem;
+      font-weight: 650;
+    }
+    header p {
+      margin: 0;
+      opacity: .9;
+      font-size: .85rem;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      align-items: center;
+      margin-top: .75rem;
+    }
+    .toolbar button {
+      border: 0;
+      border-radius: 8px;
+      padding: .45rem .8rem;
+      font: inherit;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: #fff;
+      color: var(--accent);
+    }
+    .toolbar button.secondary {
+      background: rgba(255,255,255,.15);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.35);
+    }
+    .toolbar button:active { transform: scale(.98); }
+    #save-status {
+      font-size: .8rem;
+      opacity: .95;
+      margin-left: .15rem;
+    }
+    #save-status.saved { color: #b8f0c8; }
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 1rem 1rem 4rem;
+    }
+    .banner {
+      background: var(--ok-bg);
+      border: 1px solid #b7dfc4;
+      color: var(--ok);
+      border-radius: 10px;
+      padding: .75rem 1rem;
+      margin: 1rem 0;
+      font-size: .9rem;
+    }
+    .q {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1rem 1.1rem 1.15rem;
+      margin: 1rem 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,.04);
+    }
+    .q .num {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: .75rem;
+      font-weight: 700;
+      padding: .15rem .5rem;
+      border-radius: 999px;
+      margin-bottom: .5rem;
+    }
+    .q h2 {
+      margin: 0 0 .4rem;
+      font-size: 1.05rem;
+    }
+    .q .ask {
+      margin: 0 0 .75rem;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+    .q .hint {
+      margin: -.4rem 0 .75rem;
+      font-size: .85rem;
+      color: #7a6a55;
+      font-style: italic;
+    }
+    .photos {
+      display: grid;
+      gap: .75rem;
+    }
+    .photos.two {
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 640px) {
+      .photos.two { grid-template-columns: 1fr; }
+    }
+    figure {
+      margin: 0;
+      background: #f0ebe3;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #ddd;
+    }
+    figcaption {
+      padding: .4rem .6rem;
+      font-size: .75rem;
+      color: var(--muted);
+      font-family: ui-monospace, monospace;
+    }
+    .answer {
+      margin-top: .9rem;
+      border-top: 1px solid var(--line);
+      padding-top: .7rem;
+    }
+    .answer label {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: .35rem;
+    }
+    .answer label span.filled {
+      font-weight: 500;
+      color: var(--ok);
+      font-size: .75rem;
+    }
+    .answer textarea {
+      width: 100%;
+      min-height: 5.5rem;
+      border: 2px solid var(--line);
+      border-radius: 10px;
+      padding: .65rem .75rem;
+      font: inherit;
+      font-size: .95rem;
+      resize: vertical;
+      background: #fffcf7;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .answer textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(44,74,110,.15);
+      background: #fff;
+    }
+    .answer textarea.has-text {
+      border-color: #8fbf9c;
+      background: #f7fdf8;
+    }
+    .toc {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: .9rem 1.1rem;
+      margin: 1rem 0;
+      font-size: .9rem;
+    }
+    .toc a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .toc a:hover { text-decoration: underline; }
+    .toc ol { margin: .4rem 0 0; padding-left: 1.2rem; }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: .8rem;
+      padding: 1rem;
+    }
+    .toast {
+      position: fixed;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      background: #1a1a1a;
+      color: #fff;
+      padding: .65rem 1.1rem;
+      border-radius: 999px;
+      font-size: .9rem;
+      opacity: 0;
+      transition: .25s ease;
+      z-index: 50;
+      pointer-events: none;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Preguntas de identificación — álbum familiar</h1>
+    <p>Escribe las respuestas en cada recuadro. Se guardan solas en este navegador.</p>
+    <div class="toolbar">
+      <button type="button" id="btn-copy">Copiar todas las respuestas</button>
+      <button type="button" id="btn-download" class="secondary">Descargar .txt</button>
+      <button type="button" id="btn-clear" class="secondary">Borrar todo</button>
+      <span id="save-status">Listo para escribir</span>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="banner">
+      <strong>Cómo usarlo:</strong> escribe debajo de cada foto → se guarda automáticamente.
+      Cuando terminen, <strong>Copiar todas las respuestas</strong> y pégalos en el chat / WhatsApp.
+    </div>
+
+    <div class="toc">
+      <strong>Índice</strong>
+      <ol>
+        <li><a href="#q1">Matrimonio — fecha y lugar</a></li>
+        <li><a href="#q2">Hombre mayor del brindis</a></li>
+        <li><a href="#q3">Hombre de bigote (iglesia)</a></li>
+        <li><a href="#q4">¿Cartagena? (jeep / murallas)</a></li>
+        <li><a href="#q5">Segundo hombre en el jeep</a></li>
+        <li><a href="#q6">Niños en el columpio</a></li>
+        <li><a href="#q7">Tres niños en la mesa</a></li>
+        <li><a href="#q8">Gustavo</a></li>
+        <li><a href="#q9">Familia multigeneracional</a></li>
+        <li><a href="#q10">Banquete de oficiales</a></li>
+        <li><a href="#q11">Cuatro en el césped</a></li>
+        <li><a href="#q12">Firma del retrato</a></li>
+      </ol>
+    </div>
+
+    <section class="q" id="q1">
+      <span class="num">1</span>
+      <h2>Matrimonio — fecha y lugar</h2>
+      <p class="ask">¿En qué fecha y en qué ciudad/iglesia se casaron Nohel y Rosabel?</p>
+      <div class="photos two">
+        <figure>
+          <img src="images/google-photos-album/photo-01.jpg" alt="Salida de boda" loading="lazy" />
+          <figcaption>photo-01</figcaption>
+        </figure>
+        <figure>
+          <img src="images/google-photos-album/photo-12.jpg" alt="Pareja de boda" loading="lazy" />
+          <figcaption>photo-12</figcaption>
+        </figure>
+      </div>
+      <div class="answer">
+        <label for="a1">Tu respuesta <span class="filled" data-for="a1" hidden>✓ guardado</span></label>
+        <textarea id="a1" data-q="1" data-title="Matrimonio — fecha y lugar" placeholder="Fecha, ciudad, iglesia…"></textarea>
+      </div>
+    </section>
+
+    <section class="q" id="q2">
+      <span class="num">2</span>
+      <h2>Hombre mayor del brindis</h2>
+      <p class="ask">¿Quién es el señor mayor a la derecha (traje oscuro, copa en la mano)?</p>
+      <p class="hint">¿Padre de Nohel? ¿Padre de Rosabel? ¿Otro familiar?</p>
+      <div class="photos">
+        <figure>
+          <img src="images/google-photos-album/photo-11.jpg" alt="Brindis con hombre mayor" loading="lazy" />
+          <figcaption>photo-11</figcaption>
+        </figure>
+      </div>
+      <div class="answer">
+        <label for="a2">Tu respuesta <span class="filled" data-for="a2" hidden>✓ guardado</span></label>
+        <textarea id="a2" data-q="2" data-title="Hombre mayor del brindis" placeholder="Nombre y parentesco…"></textarea>
+      </div>
+    </section>
+
+    <section class="q" id="q3">
+      <span class="num">3</span>
+      <h2>Hombre de bigote en la iglesia</h2>
+      <p class="ask">¿Quién es el hombre de bigote detrás de la novia?</p>
+      <div class="photos">
+        <figure>
+          <img src="images/google-photos-album/photo-05.jpg" alt="Iglesia — Rosabel y hombre de bigote" loading="lazy" />
+          <figcaption>photo-05</figcaption>
+        </figure>
+      </div>
+      <div class="answer">
+        <label for="a3">Tu respuesta <span class="filled" data-for="a3" hidden>✓ guardado</span></label>
+        <textarea id="a3" data-q="3" data-title="Hombre de bigote en la iglesia" placeholder="Nombre y parentesco…"></textarea>
+      </div>
+    </section>
+
+    <section class="q" id="q4">
+      <span class="num">4</span>
+      <h2>¿Cartagena? — murallas, mar, jeep</h2>
+      <p class="ask">¿Confirmamos que este grupo es Cartagena? ¿Años aproximados?</p>
+      <p class="hint">Jeep Toyota con número P-4 202</p>
+      <div class="photos two">
+        <figure>
+          <img src="images/google-photos-album/photo-14.jpg" alt="Jeep en murallas" loading="lazy" />
+          <figcaption>photo-14</figcaption>
+        </figure>
+        <figure>
+          <img src="images/google-photos-album/photo-16.jpg" alt="Garita" loading="lazy" />
+          <figcaption>photo-16</figcaption>
+        </figure>
+        <figure>
+          <img src="images/google-photos-album/photo-18.jpg" alt="Palmera y muralla" loading="lazy" />
+          <figcaption>photo-18</figcaption>
+        </figure>
+        <figure>
+          <img src="images/google-photos-album/photo-19.jpg" alt="Costa rocosa" loading="lazy" />
+          <figcaption>photo-19</figcaption>
+        </figure>
+      </div>
+      <div class="answer">
+        <label for="a4">Tu respuesta <span class="filled" data-for="a4" hidden>✓ guardado</span></label>
+        <textarea id="a4" data-q="4" data-title="¿Cartagena? — murallas, mar, jeep" placeholder="Lugar, años…"></textarea>
+      </div>
+    </section>
+
+    <section class="q" id="q5">
+      <span class="num">5</span>
+      <h2>Segundo hombre en el jeep</h2>
+      <p class="ask">¿Quién es el compañero sentado en el capó del jeep?</p>
+      <div class="photos">
+        <figure>
+          <img src="images/google-photos-album/photo-17.jpg" alt="Dos hombres y jeep" loading="lazy" />
+          <figcaption>photo-17</figcaption>
+        </figure>
+      </div>
+      <div class="answer">
+        <label for="a5">Tu respuesta <span class="filled" data-for="a5" hidden>✓ guardado</span></label>
+        <textarea id="a5" data-q="5" data-title="Segundo hombre en el jeep" placeholder="Nombre…"></textarea>
+      </div>
+    </section>
+
+    <section class="q" id="q6">
+      <span class="num">6</span>
+      <h2>Niños en el columpio</h2>
+      <p class="ask">¿Quiénes son estos niños? ¿Es el mismo destino de murallas (Cartagena)?</p>
+      <div class="photos">
+        <figure>
+          <img src="images/google-photos-album/photo-26.jpg" alt="Niños en columpio frente a muralla" loading="lazy" />
+          <figcaption>photo-26</figcaption>
+        </figure>
+      </div>
+      <div class="answer">
+        <label for="a6">Tu respuesta <span class="filled" data-for="a6" hidden>✓ guardado</span></label>
+        <textarea id="a6" data-q="6" data-title="Niños en el columpio" placeholder="Nombres…"></textarea>
+      </div>
+    </section>
+
+    <section class="q" id="q7">
+      <span class="num">7</span>
+      <h2>Tres niños en la mesa de estudio</h2>
+      <p class="ask">De izquierda a derecha, ¿quiénes son?</p>
+      <p class="hint">El del centro lleva monograma tipo “NK” en el suéter.</p>
+      <div class="photos">
+        <figure>
+          <img src="images/google-photos-album/photo-20.jpg" alt="Tres niños en mesa" loading="lazy" />
+          <figcaption>photo-20</figcaption>
+        </figure>
+      </div>
+      <div class="answer">
+        <label for="a7">Tu respuesta (izq. → der.) <span class="filled" data-for="a7" hidden>✓ guardado</span></label>
+        <textarea id="a7" data-q="7" data-title="Tres niños en la mesa" placeholder="Izquierda, centro, derecha…"></textarea>
+      </div>
+    </section>
+
+    <section class="q" id="q8">
+      <span class="num">8</span>
+      <h2>Gustavo</h2>
+      <p class="ask">El margen dice GUSTAVO — ¿confirmamos que es el hijo Gustavo? ¿Edad aproximada en la foto?</p>
+      <div class="photos">
+        <figure>
+          <img src="images/google-photos-album/photo-15.jpg" alt="Niño etiquetado Gustavo" loading="lazy" />
+          <figcaption>photo-15</figcaption>
+        </figure>
+      </div>
+      <div class="answer">
+        <label for="a8">Tu respuesta <span class="filled" data-for="a8" hidden>✓ guardado</span></label>
+        <textarea id="a8" data-q="8" data-title="Gustavo" placeholder="Sí/no, edad…"></textarea>
+      </div>
+    </section>
+
+    <section class="q" id="q9">
+      <span class="num">9</span>
+      <h2>Familia multigeneracional</h2>
+      <p class="ask">¿Quiénes son la pareja mayor (gafas)? ¿Rosabel es la mujer joven de la izquierda/centro? ¿Nombrar a cada niño/a?</p>
+      <div class="photos two">
+        <figure>
+          <img src="images/google-photos-album/photo-27.jpg" alt="Grupo familiar pose A" loading="lazy" />
+          <figcaption>photo-27</figcaption>
+        </figure>
+        <figure>
+          <img src="images/google-photos-album/photo-28.jpg" alt="Grupo familiar pose B" loading="lazy" />
+          <figcaption>photo-28</figcaption>
+        </figure>
+      </div>
+      <div class="answer">
+        <label for="a9">Tu respuesta <span class="filled" data-for="a9" hidden>✓ guardado</span></label>
+        <textarea id="a9" data-q="9" data-title="Familia multigeneracional" placeholder="Pareja mayor + cada persona…"></textarea>
+      </div>
+    </section>
+
+    <section class="q" id="q10">
+      <span class="num">10</span>
+      <h2>Banquete de oficiales</h2>
+      <p class="ask">¿Está Nohel en la mesa? Si sí, ¿dónde? ¿Evento / lugar / época?</p>
+      <div class="photos">
+        <figure>
+          <img src="images/google-photos-album/photo-29.jpg" alt="Banquete de oficiales" loading="lazy" />
+          <figcaption>photo-29</figcaption>
+        </figure>
+      </div>
+      <div class="answer">
+        <label for="a10">Tu respuesta <span class="filled" data-for="a10" hidden>✓ guardado</span></label>
+        <textarea id="a10" data-q="10" data-title="Banquete de oficiales" placeholder="Sí/no, posición, evento…"></textarea>
+      </div>
+    </section>
+
+    <section class="q" id="q11">
+      <span class="num">11</span>
+      <h2>Cuatro hombres en el césped</h2>
+      <p class="ask">¿Quiénes son? ¿Qué edificio es el de fondo (escuela, cuartel…)?</p>
+      <div class="photos">
+        <figure>
+          <img src="images/google-photos-album/photo-30.jpg" alt="Cuatro hombres en césped" loading="lazy" />
+          <figcaption>photo-30</figcaption>
+        </figure>
+      </div>
+      <div class="answer">
+        <label for="a11">Tu respuesta <span class="filled" data-for="a11" hidden>✓ guardado</span></label>
+        <textarea id="a11" data-q="11" data-title="Cuatro hombres en el césped" placeholder="Nombres, lugar…"></textarea>
+      </div>
+    </section>
+
+    <section class="q" id="q12">
+      <span class="num">12</span>
+      <h2>Firma del retrato civil</h2>
+      <p class="ask">¿Confirmamos que la firma del margen dice “Nohel Delgadillo Parra” (con H)?</p>
+      <div class="photos">
+        <figure>
+          <img src="images/google-photos-album/photo-06.jpg" alt="Retrato civil con firma" loading="lazy" />
+          <figcaption>photo-06</figcaption>
+        </figure>
+      </div>
+      <div class="answer">
+        <label for="a12">Tu respuesta <span class="filled" data-for="a12" hidden>✓ guardado</span></label>
+        <textarea id="a12" data-q="12" data-title="Firma del retrato civil" placeholder="Sí / no / cómo se lee…"></textarea>
+      </div>
+    </section>
+
+    <footer>
+      Solo local · respuestas en este navegador (localStorage) · grandfather-history
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    (function () {
+      var KEY = "nohel-photo-id-answers-v1";
+      var statusEl = document.getElementById("save-status");
+      var toastEl = document.getElementById("toast");
+      var areas = Array.prototype.slice.call(document.querySelectorAll("textarea[data-q]"));
+      var saveTimer = null;
+
+      function toast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add("show");
+        setTimeout(function () { toastEl.classList.remove("show"); }, 2200);
+      }
+
+      function markFilled(ta) {
+        var has = ta.value.trim().length > 0;
+        ta.classList.toggle("has-text", has);
+        var badge = document.querySelector('.filled[data-for="' + ta.id + '"]');
+        if (badge) badge.hidden = !has;
+      }
+
+      function collect() {
+        var data = {};
+        areas.forEach(function (ta) {
+          data[ta.id] = ta.value;
+        });
+        data._updated = new Date().toISOString();
+        return data;
+      }
+
+      function save() {
+        try {
+          localStorage.setItem(KEY, JSON.stringify(collect()));
+          statusEl.textContent = "Guardado · " + new Date().toLocaleTimeString();
+          statusEl.classList.add("saved");
+        } catch (e) {
+          statusEl.textContent = "No se pudo guardar (¿modo privado?)";
+          statusEl.classList.remove("saved");
+        }
+      }
+
+      function scheduleSave() {
+        statusEl.textContent = "Guardando…";
+        statusEl.classList.remove("saved");
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(save, 250);
+      }
+
+      function load() {
+        try {
+          var raw = localStorage.getItem(KEY);
+          if (!raw) return;
+          var data = JSON.parse(raw);
+          areas.forEach(function (ta) {
+            if (typeof data[ta.id] === "string") {
+              ta.value = data[ta.id];
+              markFilled(ta);
+            }
+          });
+          if (data._updated) {
+            statusEl.textContent = "Restaurado · " + new Date(data._updated).toLocaleString();
+            statusEl.classList.add("saved");
+          }
+        } catch (e) { /* ignore */ }
+      }
+
+      function exportText() {
+        var lines = [
+          "Respuestas — identificación de fotos",
+          "Álbum: Abuelito y Abuelita old Photographs",
+          "Fecha: " + new Date().toLocaleString(),
+          ""
+        ];
+        areas.forEach(function (ta) {
+          var n = ta.getAttribute("data-q");
+          var title = ta.getAttribute("data-title");
+          var v = ta.value.trim() || "(sin respuesta)";
+          lines.push(n + ". " + title);
+          lines.push(v);
+          lines.push("");
+        });
+        return lines.join("\n");
+      }
+
+      areas.forEach(function (ta) {
+        ta.addEventListener("input", function () {
+          markFilled(ta);
+          scheduleSave();
+        });
+      });
+
+      document.getElementById("btn-copy").addEventListener("click", function () {
+        save();
+        var text = exportText();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            toast("Respuestas copiadas al portapapeles");
+          }).catch(function () {
+            fallbackCopy(text);
+          });
+        } else {
+          fallbackCopy(text);
+        }
+      });
+
+      function fallbackCopy(text) {
+        var pre = document.createElement("textarea");
+        pre.value = text;
+        document.body.appendChild(pre);
+        pre.select();
+        try {
+          document.execCommand("copy");
+          toast("Respuestas copiadas");
+        } catch (e) {
+          toast("Copia manual: usa Descargar .txt");
+        }
+        document.body.removeChild(pre);
+      }
+
+      document.getElementById("btn-download").addEventListener("click", function () {
+        save();
+        var blob = new Blob([exportText()], { type: "text/plain;charset=utf-8" });
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "respuestas-fotos-nohel-" + new Date().toISOString().slice(0, 10) + ".txt";
+        a.click();
+        URL.revokeObjectURL(a.href);
+        toast("Archivo descargado");
+      });
+
+      document.getElementById("btn-clear").addEventListener("click", function () {
+        if (!confirm("¿Borrar todas las respuestas guardadas en este navegador?")) return;
+        areas.forEach(function (ta) {
+          ta.value = "";
+          markFilled(ta);
+        });
+        localStorage.removeItem(KEY);
+        statusEl.textContent = "Borrado";
+        statusEl.classList.remove("saved");
+        toast("Respuestas borradas");
+      });
+
+      load();
+    })();
+  </script>
+</body>
+</html>

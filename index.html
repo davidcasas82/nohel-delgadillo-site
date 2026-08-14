@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Family history timeline of Nohel Delgadillo Parra — photographs, narrative, and sources. Historia familiar bilingüe."
+    />
+    <title>Nohel Delgadillo Parra — Family History</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="/nohel-delgadillo-site/assets/index-Wly_CQGr.js"></script>
+    <link rel="stylesheet" crossorigin href="/nohel-delgadillo-site/assets/index-TYETECsa.css">
+  </head>
+  <body>
+    <a class="skip" href="#story">Skip to story</a>
+
+    <header class="hero" id="top">
+      <img
+        class="hero__bg"
+        src="images/google-photos-album/photo-01.jpg"
+        alt=""
+        width="1200"
+        height="1800"
+        decoding="async"
+        fetchpriority="high"
+      />
+      <div class="hero__veil"></div>
+      <div class="lang-bar lang-bar--hero" role="group" aria-label="Language">
+        <button type="button" class="lang-btn" data-lang-btn="en" aria-pressed="true" aria-label="English">
+          <span class="lang-flag" aria-hidden="true">
+            <svg viewBox="0 0 19 10" xmlns="http://www.w3.org/2000/svg">
+              <rect width="19" height="10" fill="#b22234" />
+              <rect y="1.11" width="19" height="1.11" fill="#fff" />
+              <rect y="3.33" width="19" height="1.11" fill="#fff" />
+              <rect y="5.56" width="19" height="1.11" fill="#fff" />
+              <rect y="7.78" width="19" height="1.11" fill="#fff" />
+              <rect width="7.6" height="5.38" fill="#3c3b6e" />
+            </svg>
+          </span>
+          EN
+        </button>
+        <button type="button" class="lang-btn" data-lang-btn="es" aria-pressed="false" aria-label="Español">
+          <span class="lang-flag" aria-hidden="true">
+            <svg viewBox="0 0 16 11" xmlns="http://www.w3.org/2000/svg">
+              <rect width="16" height="5.5" fill="#fcd116" />
+              <rect y="5.5" width="16" height="2.75" fill="#003893" />
+              <rect y="8.25" width="16" height="2.75" fill="#ce1126" />
+            </svg>
+          </span>
+          ES
+        </button>
+      </div>
+      <div class="hero__inner">
+        <p class="eyebrow" id="ui-eyebrow">Family history project</p>
+        <h1 id="site-title">Nohel Delgadillo Parra</h1>
+        <p class="hero__dates" id="site-dates">1923 – 2011</p>
+        <p class="hero__sub" id="site-sub"></p>
+        <nav class="hero__nav" aria-label="On this page">
+          <a href="#story" id="nav-story">Story</a>
+          <a href="#gallery" id="nav-gallery">Family photos</a>
+          <a href="#archives" id="nav-archives">Archives</a>
+        </nav>
+      </div>
+    </header>
+
+    <details class="method" id="method">
+      <summary id="ui-method-title">How to read this page</summary>
+      <div class="method__body">
+        <p id="site-method"></p>
+        <ul class="tier-legend">
+          <li>
+            <span class="tier-mark tier-mark--public" id="badge-public">public</span>
+            <span id="legend-public">Verified institutional or press sources</span>
+          </li>
+          <li>
+            <span class="tier-mark tier-mark--family" id="badge-family">family</span>
+            <span id="legend-family">Oral history from relatives</span>
+          </li>
+          <li>
+            <span class="tier-mark tier-mark--lead" id="badge-lead">lead</span>
+            <span id="legend-lead">Open research — not proven</span>
+          </li>
+          <li>
+            <span class="tier-mark tier-mark--mixed" id="badge-mixed">mixed</span>
+            <span id="legend-mixed">Public facts + family memory side by side</span>
+          </li>
+        </ul>
+      </div>
+    </details>
+
+    <nav class="year-nav" id="year-nav" aria-label="Timeline years" hidden></nav>
+
+    <main id="story" class="story">
+      <div class="wrap" id="chapters"></div>
+    </main>
+
+    <section class="family-index" id="the-family">
+      <div class="wrap">
+        <h2 id="ui-family-title">The family grows</h2>
+        <p class="section-lead family-index__lead" id="ui-family-lead"></p>
+        <ol class="family-index__list" id="family-index"></ol>
+      </div>
+    </section>
+
+    <section class="gallery" id="gallery">
+      <div class="wrap">
+        <h2 id="ui-gallery-title">Family photographs</h2>
+        <p class="section-lead" id="ui-gallery-lead"></p>
+        <div class="gallery__grid" id="gallery-grid"></div>
+      </div>
+    </section>
+
+    <section class="archives" id="archives">
+      <div class="wrap">
+        <h2 id="ui-archives-title">From the archives</h2>
+        <p class="section-lead archives__lead" id="ui-archives-lead"></p>
+        <div class="archives__grid" id="archives-grid"></div>
+      </div>
+    </section>
+
+    <section class="sources" id="sources">
+      <div class="wrap narrow">
+        <h2 id="ui-sources-title">Sources &amp; research</h2>
+        <p id="ui-sources-intro"></p>
+        <ul class="source-list" id="source-list"></ul>
+        <p class="colophon-note" id="ui-sources-footer"></p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="wrap narrow">
+        <p id="ui-footer">Private family project · Research in progress · No invented facts</p>
+        <a href="#top" id="ui-back-top">Back to top</a>
+      </div>
+    </footer>
+
+    <dialog class="lightbox" id="lightbox" aria-label="Photograph">
+      <div class="lightbox__bar">
+        <button type="button" class="lightbox__close" id="lightbox-close" aria-label="Close">
+          Close
+        </button>
+      </div>
+      <button type="button" class="lightbox__nav lightbox__prev" id="lightbox-prev" aria-label="Previous">
+        ‹
+      </button>
+      <figure class="lightbox__figure">
+        <img id="lightbox-img" alt="" />
+        <figcaption id="lightbox-caption"></figcaption>
+      </figure>
+      <button type="button" class="lightbox__nav lightbox__next" id="lightbox-next" aria-label="Next">
+        ›
+      </button>
+    </dialog>
+
+  </body>
+</html>
